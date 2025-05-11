@@ -1,0 +1,190 @@
+.roadmap-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+.roadmap-title {
+  text-align: center;
+  color: #2c3e50;
+  font-size: 2.5rem;
+  margin-bottom: 3rem;
+  font-weight: 700;
+}
+
+.roadmap {
+  position: relative;
+  padding: 2rem 0;
+}
+
+.roadmap-line {
+  position: absolute;
+  left: 50px;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: #e0e0e0;
+  transform: translateX(-50%);
+}
+
+.roadmap-step {
+  position: relative;
+  margin-left: 100px;
+  margin-bottom: 3rem;
+  padding: 1.5rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.roadmap-step:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.step-number {
+  position: absolute;
+  left: -75px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 50px;
+  height: 50px;
+  background: #3498db;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  font-size: 1.2rem;
+  box-shadow: 0 4px 6px rgba(52, 152, 219, 0.3);
+}
+
+.step-content {
+  padding-left: 1rem;
+}
+
+.step-title {
+  color: #2c3e50;
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.step-description {
+  color: #666;
+  font-size: 1rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Status styles */
+.roadmap-step.pending .step-number {
+  background: #95a5a6;
+}
+
+.roadmap-step.in-progress .step-number {
+  background: #f1c40f;
+}
+
+.roadmap-step.completed .step-number {
+  background: #2ecc71;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .roadmap-line {
+    left: 30px;
+  }
+
+  .roadmap-step {
+    margin-left: 60px;
+  }
+
+  .step-number {
+    left: -45px;
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+
+  .step-title {
+    font-size: 1.2rem;
+  }
+}
+
+.timeline {
+  position: relative;
+  padding-left: 3rem;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 1.5rem;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: #dee2e6;
+}
+
+.timeline-item {
+  position: relative;
+}
+
+.timeline-badge {
+  width: 3rem;
+  height: 3rem;
+  background: white;
+  border: 2px solid #dee2e6;
+  z-index: 1;
+}
+
+.timeline-item.pending .timeline-badge {
+  border-color: #6c757d;
+  color: #6c757d;
+}
+
+.timeline-item.in-progress .timeline-badge {
+  border-color: #ffc107;
+  color: #ffc107;
+}
+
+.timeline-item.completed .timeline-badge {
+  border-color: #198754;
+  color: #198754;
+}
+
+.timeline-badge i {
+  font-size: 1.25rem;
+}
+
+.card {
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .timeline {
+    padding-left: 2rem;
+  }
+
+  .timeline::before {
+    left: 1rem;
+  }
+
+  .timeline-badge {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .timeline-badge i {
+    font-size: 1rem;
+  }
+}
