@@ -1,0 +1,114 @@
+<div class="container py-4">
+  <div class="row justify-content-center">
+    <div class="col-12 col-lg-8">
+      <div class="card">
+        <div class="card-body p-4">
+          <h2 class="text-center mb-4">Upload Your Meme</h2>
+          
+          <form [formGroup]="uploadForm" (ngSubmit)="onSubmit()" class="needs-validation">
+            <!-- Title -->
+            <div class="mb-3">
+              <label for="title" class="form-label">Title</label>
+              <input 
+                type="text" 
+                class="form-control" 
+                id="title"
+                formControlName="title"
+                [class.is-invalid]="uploadForm.get('title')?.invalid && uploadForm.get('title')?.touched"
+                placeholder="Give your meme a catchy title">
+              <div class="invalid-feedback">
+                {{ getErrorMessage('title') }}
+              </div>
+            </div>
+
+            <!-- Description -->
+            <div class="mb-3">
+              <label for="description" class="form-label">Description</label>
+              <textarea 
+                class="form-control" 
+                id="description"
+                rows="3"
+                formControlName="description"
+                [class.is-invalid]="uploadForm.get('description')?.invalid && uploadForm.get('description')?.touched"
+                placeholder="Describe your meme..."></textarea>
+              <div class="invalid-feedback">
+                {{ getErrorMessage('description') }}
+              </div>
+            </div>
+
+            <!-- Category -->
+            <div class="mb-3">
+              <label for="category" class="form-label">Category</label>
+              <select 
+                class="form-select" 
+                id="category"
+                formControlName="category"
+                [class.is-invalid]="uploadForm.get('category')?.invalid && uploadForm.get('category')?.touched">
+                <option value="">Select a category</option>
+                <option *ngFor="let cat of categories" [value]="cat.value">
+                  {{ cat.label }}
+                </option>
+              </select>
+              <div class="invalid-feedback">
+                {{ getErrorMessage('category') }}
+              </div>
+            </div>
+
+            <!-- Tags -->
+            <div class="mb-3">
+              <label for="tags" class="form-label">Tags</label>
+              <input 
+                type="text" 
+                class="form-control" 
+                id="tags"
+                formControlName="tags"
+                [class.is-invalid]="uploadForm.get('tags')?.invalid && uploadForm.get('tags')?.touched"
+                placeholder="funny, tech, gaming (separate with commas)">
+              <div class="invalid-feedback">
+                {{ getErrorMessage('tags') }}
+              </div>
+              <div class="form-text">Separate tags with commas</div>
+            </div>
+
+            <!-- Image Upload -->
+            <div class="mb-4">
+              <label for="imageFile" class="form-label">Meme Image</label>
+              <input 
+                type="file" 
+                class="form-control" 
+                id="imageFile"
+                accept="image/*"
+                (change)="onFileSelected($event)"
+                [class.is-invalid]="uploadForm.get('imageFile')?.invalid && uploadForm.get('imageFile')?.touched">
+              <div class="invalid-feedback">
+                {{ getErrorMessage('imageFile') }}
+              </div>
+              <div class="form-text">Maximum file size: 5MB. Supported formats: JPEG, PNG, GIF</div>
+            </div>
+
+            <!-- Image Preview -->
+            <div *ngIf="previewUrl" class="mb-4 text-center">
+              <div class="preview-container">
+                <img [src]="previewUrl" alt="Preview" class="img-preview">
+              </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="d-grid">
+              <button 
+                type="submit" 
+                class="btn btn-primary"
+                [disabled]="uploadForm.invalid || isUploading">
+                <span *ngIf="!isUploading">Upload Meme</span>
+                <span *ngIf="isUploading" class="d-flex align-items-center justify-content-center gap-2">
+                  <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                  Uploading...
+                </span>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 

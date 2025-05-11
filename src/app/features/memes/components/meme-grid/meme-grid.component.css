@@ -1,0 +1,81 @@
+:host {
+  display: block;
+  min-height: 100vh;
+}
+
+.filters-section {
+  position: sticky;
+  top: 1rem;
+  z-index: 100;
+  background-color: var(--bs-body-bg);
+  padding: 1rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.filters-section .btn {
+  transition: all 0.2s ease;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+}
+
+.filters-section .btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.filters-section .btn i {
+  font-size: 1.1em;
+}
+
+/* Refresh button styles */
+.btn-outline-primary {
+  transition: all 0.2s ease;
+}
+
+.btn-outline-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.btn-outline-primary:disabled {
+  transform: none;
+  box-shadow: none;
+}
+
+.bi-arrow-repeat {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 767.98px) {
+  .filters-section {
+    position: relative;
+    top: 0;
+    padding: 0.5rem 0;
+  }
+
+  .filters-section .btn {
+    font-size: 0.9rem;
+    padding: 0.4rem 0.8rem;
+  }
+
+  .d-flex.justify-content-between {
+    flex-direction: column;
+    align-items: flex-start !important;
+    gap: 1rem;
+  }
+
+  .d-flex.align-items-center.gap-3 {
+    width: 100%;
+    justify-content: space-between;
+  }
+} 

@@ -1,0 +1,44 @@
+.meme-card {
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.meme-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.meme-content {
+  cursor: pointer;
+}
+
+.meme-image {
+  aspect-ratio: 1;
+  object-fit: cover;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.meme-card:hover .meme-image {
+  opacity: 0.9;
+}
+
+.delete-btn {
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.meme-card:hover .delete-btn {
+  opacity: 1;
+}
+
+.delete-btn:hover {
+  transform: scale(1.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .delete-btn {
+    opacity: 1;
+  }
+} 

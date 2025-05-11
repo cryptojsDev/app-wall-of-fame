@@ -1,0 +1,122 @@
+<div class="container py-4">
+  <!-- Back Button -->
+  <button (click)="goBack()" class="btn btn-outline-light mb-4">
+    <i class="bi bi-arrow-left me-2"></i>Back to Dashboard
+  </button>
+
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="text-center py-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <!-- Meme Detail -->
+  <div *ngIf="!isLoading && meme" class="row">
+    <!-- Meme Image and Info -->
+    <div class="col-lg-8 mb-4">
+      <div class="card border-0 bg-dark">
+        <img [src]="meme.imageUrl" [alt]="meme.title" class="card-img-top rounded">
+        <div class="card-body">
+          <h1 class="card-title h2 mb-3">{{ meme.title }}</h1>
+          
+          <div class="d-flex align-items-center mb-3">
+            <span class="text-muted me-3">
+              <i class="bi bi-person me-1"></i>{{ meme.author }}
+            </span>
+            <span class="text-muted">
+              <i class="bi bi-calendar me-1"></i>{{ meme.createdAt | date:'mediumDate' }}
+            </span>
+          </div>
+
+          <!-- Pump.fun Link -->
+          <div *ngIf="meme.pumpFunLink" class="mb-3">
+            <a [href]="meme.pumpFunLink" target="_blank" class="btn btn-outline-info">
+              <i class="bi bi-box-arrow-up-right"></i> View Token on Pump.fun
+            </a>
+          </div>
+
+          <!-- Social Media Links -->
+          <div *ngIf="hasSocialMedia()" class="social-media mb-4">
+            <h6 class="text-muted mb-2">Follow {{ meme.author }} on:</h6>
+            <div class="d-flex gap-2">
+              <a *ngIf="meme.socialMedia?.telegram" 
+                 [href]="meme.socialMedia?.telegram" 
+                 target="_blank" 
+                 class="btn btn-outline-primary btn-sm">
+                <i class="bi bi-telegram me-1"></i>Telegram
+              </a>
+              <a *ngIf="meme.socialMedia?.twitter" 
+                 [href]="meme.socialMedia?.twitter" 
+                 target="_blank" 
+                 class="btn btn-outline-primary btn-sm">
+                <i class="bi bi-twitter-x me-1"></i>Twitter
+              </a>
+              <a *ngIf="meme.socialMedia?.website" 
+                 [href]="meme.socialMedia?.website" 
+                 target="_blank" 
+                 class="btn btn-outline-primary btn-sm">
+                <i class="bi bi-globe me-1"></i>Website
+              </a>
+            </div>
+          </div>
+
+          <p class="card-text mb-4" *ngIf="meme.description">{{ meme.description }}</p>
+
+          <div class="d-flex gap-2 mb-4" *ngIf="meme.tags && meme.tags.length">
+            <span *ngFor="let tag of meme.tags" class="badge bg-primary">{{ tag }}</span>
+          </div>
+
+          <button (click)="likeMeme()" class="btn btn-outline-primary">
+            <i class="bi bi-heart-fill me-1"></i>{{ meme.likes }} Likes
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Comments Section -->
+    <div class="col-lg-4">
+      <div class="card border-0 bg-dark">
+        <div class="card-header bg-transparent border-0">
+          <h3 class="h5 mb-0">Comments</h3>
+        </div>
+        <div class="card-body">
+          <!-- Comment Form -->
+          <form (ngSubmit)="addComment()" class="mb-4">
+            <div class="mb-3">
+              <textarea 
+                [(ngModel)]="commentText"
+                name="commentText"
+                class="form-control bg-dark text-light"
+                rows="3"
+                placeholder="Write a comment..."
+                required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary" [disabled]="!commentText.trim()">
+              Post Comment
+            </button>
+          </form>
+
+          <!-- Comments List -->
+          <div class="comments-list">
+            <div *ngFor="let comment of comments" class="comment mb-3 pb-3 border-bottom border-secondary">
+              <div class="d-flex justify-content-between align-items-start mb-2">
+                <div>
+                  <strong class="d-block">{{ comment.author }}</strong>
+                  <small class="text-muted">{{ comment.createdAt | date:'short' }}</small>
+                </div>
+              </div>
+              <p class="mb-0">{{ comment.text }}</p>
+            </div>
+
+            <!-- Empty State -->
+            <div *ngIf="comments.length === 0" class="text-center text-muted py-4">
+              <i class="bi bi-chat-dots fs-1 d-block mb-2"></i>
+              <p class="mb-0">No comments yet. Be the first to comment!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 

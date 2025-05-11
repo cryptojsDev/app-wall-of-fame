@@ -1,0 +1,213 @@
+<div class="container py-4">
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="text-center py-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <!-- Profile Content -->
+  <div *ngIf="!isLoading" class="row">
+    <!-- User Info Card -->
+    <div class="col-12 mb-4">
+      <div class="card">
+        <div class="card-body">
+          <h2 class="card-title h4 mb-4">Profile Information</h2>
+          <div class="row g-3">
+            <!-- Username -->
+            <div class="col-md-6">
+              <div class="d-flex align-items-center">
+                <div class="flex-grow-1">
+                  <label class="form-label text-muted mb-1">Username</label>
+                  <div class="input-group">
+                    <input 
+                      type="text" 
+                      class="form-control" 
+                      [value]="showUsername ? userInfo.username : getMaskedText(userInfo.username)"
+                      readonly>
+                    <button 
+                      class="btn btn-outline-secondary" 
+                      type="button"
+                      (click)="toggleUsername()"
+                      [title]="showUsername ? 'Hide username' : 'Show username'">
+                      <i class="bi" [class.bi-eye]="!showUsername" [class.bi-eye-slash]="showUsername"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Email -->
+            <div class="col-md-6">
+              <div class="d-flex align-items-center">
+                <div class="flex-grow-1">
+                  <label class="form-label text-muted mb-1">Email</label>
+                  <div class="input-group">
+                    <input 
+                      type="text" 
+                      class="form-control" 
+                      [value]="showEmail ? userInfo.email : getMaskedText(userInfo.email)"
+                      readonly>
+                    <button 
+                      class="btn btn-outline-secondary" 
+                      type="button"
+                      (click)="toggleEmail()"
+                      [title]="showEmail ? 'Hide email' : 'Show email'">
+                      <i class="bi" [class.bi-eye]="!showEmail" [class.bi-eye-slash]="showEmail"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Pump.fun Link -->
+            <div class="col-12">
+              <div class="d-flex align-items-center">
+                <div class="flex-grow-1">
+                  <label class="form-label text-muted mb-1">Pump.fun Token Link</label>
+                  <div class="input-group">
+                    <input 
+                      *ngIf="!isEditingPumpFun"
+                      type="text" 
+                      class="form-control" 
+                      [value]="userInfo.pumpFunLink"
+                      readonly>
+                    <input 
+                      *ngIf="isEditingPumpFun"
+                      type="text" 
+                      class="form-control" 
+                      formControlName="pumpFunLink"
+                      [class.is-invalid]="pumpFunForm.get('pumpFunLink')?.invalid && pumpFunForm.get('pumpFunLink')?.touched"
+                      placeholder="https://pump.fun/my-token">
+                    <button 
+                      *ngIf="!isEditingPumpFun"
+                      class="btn btn-outline-secondary" 
+                      type="button"
+                      (click)="toggleEditPumpFun()"
+                      title="Edit pump.fun link">
+                      <i class="bi bi-pencil"></i>
+                    </button>
+                    <button 
+                      *ngIf="isEditingPumpFun"
+                      class="btn btn-outline-success" 
+                      type="button"
+                      (click)="savePumpFunLink()"
+                      [disabled]="pumpFunForm.invalid"
+                      title="Save pump.fun link">
+                      <i class="bi bi-check-lg"></i>
+                    </button>
+                    <button 
+                      *ngIf="isEditingPumpFun"
+                      class="btn btn-outline-danger" 
+                      type="button"
+                      (click)="toggleEditPumpFun()"
+                      title="Cancel editing">
+                      <i class="bi bi-x-lg"></i>
+                    </button>
+                  </div>
+                  <div *ngIf="isEditingPumpFun" class="invalid-feedback">
+                    {{ getPumpFunLinkError() }}
+                  </div>
+                  <div *ngIf="!isEditingPumpFun && userInfo.pumpFunLink" class="form-text">
+                    <a [href]="userInfo.pumpFunLink" target="_blank" class="text-decoration-none">
+                      <i class="bi bi-box-arrow-up-right"></i> Visit your token page
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Member Since -->
+            <div class="col-12">
+              <div class="d-flex align-items-center">
+                <div class="flex-grow-1">
+                  <label class="form-label text-muted mb-1">Member Since</label>
+                  <input 
+                    type="text" 
+                    class="form-control" 
+                    [value]="userInfo.createdAt | date:'mediumDate'"
+                    readonly>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="col-12 mb-4">
+      <div class="row g-3">
+        <div class="col-md-4">
+          <div class="card h-100">
+            <div class="card-body text-center">
+              <h3 class="card-title h5">Total Memes</h3>
+              <p class="display-4 mb-0">{{ stats.totalMemes }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card h-100">
+            <div class="card-body text-center">
+              <h3 class="card-title h5">Total Likes</h3>
+              <p class="display-4 mb-0">{{ stats.totalLikes }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card h-100">
+            <div class="card-body text-center">
+              <h3 class="card-title h5">Most Popular Category</h3>
+              <p class="display-4 mb-0">{{ getCategoryIcon(stats.mostPopularCategory) }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Memes Grid -->
+    <div class="col-12">
+      <h2 class="h4 mb-4">Your Memes</h2>
+      <div class="row g-4">
+        <div *ngFor="let meme of userMemes" class="col-sm-6 col-md-4 col-lg-3">
+          <div class="card h-100">
+            <img [src]="meme.imageUrl" class="card-img-top" [alt]="meme.title">
+            <div class="card-body">
+              <h5 class="card-title">{{ meme.title }}</h5>
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="badge bg-primary">
+                  {{ getCategoryIcon(meme.category) }} {{ meme.category }}
+                </span>
+                <small class="text-muted">
+                  <i class="bi bi-heart-fill text-danger"></i> {{ meme.likes }}
+                </small>
+              </div>
+              <div *ngIf="meme.pumpFunLink" class="mt-2">
+                <a [href]="meme.pumpFunLink" target="_blank" class="btn btn-sm btn-outline-info w-100">
+                  <i class="bi bi-box-arrow-up-right"></i> View Token
+                </a>
+              </div>
+            </div>
+            <div class="card-footer bg-transparent border-top-0">
+              <a [routerLink]="['/memes', meme.id]" class="btn btn-outline-primary btn-sm w-100">
+                View Details
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Empty State -->
+      <div *ngIf="userMemes.length === 0" class="text-center py-5">
+        <div class="mb-3">
+          <i class="bi bi-emoji-smile display-1"></i>
+        </div>
+        <h3 class="h5">No memes yet</h3>
+        <p class="text-muted">Start sharing your memes with the community!</p>
+        <a routerLink="/upload" class="btn btn-primary">
+          Upload Your First Meme
+        </a>
+      </div>
+    </div>
+  </div>
+</div> 

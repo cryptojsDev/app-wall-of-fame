@@ -1,0 +1,87 @@
+:host {
+  display: block;
+  min-height: 100vh;
+}
+
+.card {
+  background-color: #2c3034;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.card-img-top {
+  max-height: 70vh;
+  object-fit: contain;
+  background-color: #1a1d20;
+}
+
+.form-control {
+  background-color: #1a1d20;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--bs-body-color);
+}
+
+.form-control:focus {
+  background-color: #1a1d20;
+  border-color: #0d6efd;
+  color: var(--bs-body-color);
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+.form-control::placeholder {
+  color: #6c757d;
+}
+
+.comment {
+  transition: background-color 0.2s ease;
+}
+
+.comment:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.btn-outline-primary:hover {
+  background-color: #0d6efd;
+  color: white;
+}
+
+.badge {
+  font-weight: 500;
+  padding: 0.5em 0.8em;
+}
+
+/* Social Media Styles */
+.social-media .btn {
+  transition: all 0.2s ease;
+  border-width: 1px;
+}
+
+.social-media .btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.social-media .btn i {
+  font-size: 1.1em;
+}
+
+/* Responsive adjustments */
+@media (max-width: 991.98px) {
+  .card-img-top {
+    max-height: 50vh;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .card-img-top {
+    max-height: 40vh;
+  }
+  
+  .social-media .d-flex {
+    flex-wrap: wrap;
+  }
+  
+  .social-media .btn {
+    flex: 1 1 auto;
+    min-width: 120px;
+  }
+} 
